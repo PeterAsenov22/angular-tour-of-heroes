@@ -1,16 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import {HeroesModule} from './heroes/heroes.module'
+import { HttpClientModule } from '@angular/common/http'
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api'
+import { InMemoryDataService } from './in-memory-data.service'
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component'
+import { MessagesComponent } from './messages/messages.component'
+import { AppRoutingModule } from './app-routing.module'
+import { DashboardComponent } from './dashboard/dashboard.component'
+
+import { HeroesService } from './heroes/heroes.service'
+import { HeroSearchComponent } from './hero-search/hero-search.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MessagesComponent,
+    DashboardComponent,
+    HeroSearchComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HeroesModule,
+    AppRoutingModule,
+    HttpClientModule,
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
-  providers: [],
+  providers: [HeroesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
